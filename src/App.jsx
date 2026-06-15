@@ -5,21 +5,28 @@ function App() {
   const [message, setMessage] = useState('')
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setMessage('Submitting...')
-    fetch('https://script.google.com/macros/s/AKfycbwVfHo0n7plZkfJzMZvAw7X5fte8a-lfH_kXAjy6hFuJ_HhDlAuW-MnAXMNLrJ5bvJgYQ/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(form),
-    })
-    .then(() => {
-      setMessage('Thanks! Registered successfully. We will contact you soon.')
-      setForm({name: '', phone: '', email: '', skills: ''})
-    })
-    .catch(() => {
-      setMessage('Error submitting. Please try again.')
-    })
-  }
+  e.preventDefault()
+  setMessage('Submitting...')
+  
+  const data = {
+    fullName: form.name,
+    phone: form.phone,
+    email: form.email,
+    skills: form.skills
+  };
+
+  fetch('https://script.google.com/macros/s/AKfycbypwf6yTbBkmV6xQ2Al3jwjgtqDv3X9c-SdT7BurlWvBabwZmUqXCIvh_0Ic3xM7nP-/exec', {
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+  .then(() => {
+    setMessage('Thanks! Registered successfully. We will contact you soon.')
+    setForm({name: '', phone: '', email: '', skills: ''})
+  })
+  .catch(() => {
+    setMessage('Error submitting. Please try again.')
+  })
+}
 
   return (
     <div style={{fontFamily: 'Arial', maxWidth: '500px', margin: '50px auto', padding: '20px'}}>
